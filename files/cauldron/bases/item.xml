@@ -1,0 +1,45 @@
+<Entity tags="hittable,souls_cauldron_item,teleportable_NOT,item_physics,item_pickup">
+
+    <LuaComponent
+        script_kick="mods/reapers_cauldron/files/cauldron/item_kick.lua"
+    ></LuaComponent>
+
+    <PhysicsBodyComponent 
+		_tags="enabled_in_world"
+		uid="1" 
+		allow_sleep="1" 
+		angular_damping="0" 
+		fixed_rotation="0" 
+		is_bullet="1" 
+		linear_damping="0"
+		auto_clean="1"
+		hax_fix_going_through_ground="1"
+		on_death_leave_physics_body="0"
+		on_death_really_leave_body="0"
+	></PhysicsBodyComponent>
+
+    <PhysicsThrowableComponent
+		max_throw_speed="130"
+		throw_force_coeff="1.5"
+	></PhysicsThrowableComponent>
+
+    <ProjectileComponent
+		_tags="enabled_in_world"
+		lifetime="-1"
+		penetrate_entities="1"
+		never_hit_player="1"
+	></ProjectileComponent>
+
+	<VelocityComponent
+		_tags="enabled_in_world"
+	></VelocityComponent>
+
+    <HitboxComponent 
+		_tags="enabled_in_world"
+		aabb_min_x="-3" 
+		aabb_max_x="3" 
+		aabb_min_y="-5" 
+		aabb_max_y="0" >
+	</HitboxComponent>
+
+</Entity>
