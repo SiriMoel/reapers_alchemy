@@ -76,12 +76,12 @@ function CreateCauldronItem(x, y, soul1, soul2, soul3)
         name="souls_cauldron_item_3",
         value_string=soul3,
     })
-    local name = "Stone of " .. ScrambleString(soul_types_cauldron[soul1_id].name .. soul_types_cauldron[soul2_id].name .. soul_types_cauldron[soul3_id].name)
+    local name = "Talisman of " .. string.scramble(string.lower(soul_types_cauldron_item_info[soul1_id].name .. soul_types_cauldron_item_info[soul2_id].name .. soul_types_cauldron_item_info[soul3_id].name))
     local desc = "Function unknown. Maybe hold it or kick it... or both?"
     EntityAddComponent2(item, "UIInfoComponent", { name=name, })
     EntityAddComponent2(item, "ItemComponent", {
         _tags="enabled_in_world",
-        max_child_items="0",
+        max_child_items=0,
         is_pickable=true,
         is_equipable_forced=true,
         ui_sprite="mods/reapers_cauldron/files/cauldron/sprites/item/generated/" .. soul1_id .. "_" .. soul2_id .. "_" .. soul3_id .. ".png",
@@ -89,27 +89,30 @@ function CreateCauldronItem(x, y, soul1, soul2, soul3)
         item_name=name,
         ui_description=desc,
     })
-    EntityAddComponent2(item, "AbilityComponent", {
+    local comp_ability = EntityAddComponent2(item, "AbilityComponent", {
         ui_name=name,
         throw_as_item=true,
     })
-    EntityAddComponent2(item, "PhysicsImageShapeComponent", {
+    ComponentObjectSetValue2(comp_ability, "gun_config", "deck_capacity", 0)
+    local comp_pis = EntityGetFirstComponentIncludingDisabled(item, "PhysicsImageShapeComponent") or 0
+    ComponentSetValue2(comp_pis, "image_file", "mods/reapers_cauldron/files/cauldron/sprites/item/generated/" .. soul1_id .. "_" .. soul2_id .. "_" .. soul3_id .. "_inworld.png")
+    --[[EntityAddComponent2(item, "PhysicsImageShapeComponent", {
         body_id=1,
         centered=true,
-        image_file="mods/reapers_cauldron/files/cauldron/sprites/item/generated/" .. soul1_id .. "_" .. soul2_id .. "_" .. soul3_id .. "_inworld.png",
-        material="rock_box2d",
-    })
+        image_file=,
+        material=CellFactory_GetType("rock_box2d_hard"),
+    })]]
     EntityAddComponent2(item, "SpriteComponent", {
         _tags="enabled_in_hand",
         _enabled=false,
-		offset_x="4",
-		offset_y="4",
+		offset_x=4,
+		offset_y=4,
         image_file="mods/reapers_cauldron/files/cauldron/sprites/item/generated/" .. soul1_id .. "_" .. soul2_id .. "_" .. soul3_id .. "_inworld.png",
     })
     if AnyOfTableEquals({soul1, soul2, soul3}, "bat") then
         EntityAddComponent2(item, "GameEffectComponent", {
             _tags="enabled_in_hand",
-            effects="PROTECTION_MELEE",
+            effect="PROTECTION_MELEE",
             frames=-1,
         })
     end
@@ -122,6 +125,7 @@ function CreateCauldronItem(x, y, soul1, soul2, soul3)
     end
     if AnyOfTableEquals({soul1, soul2, soul3}, "worm") then
         EntityAddComponent2(item, "LuaComponent", {
+            _tags="enabled_in_hand",
             script_source_file = "data/scripts/perks/radar_wand.lua",
             execute_every_n_frame = 1,
         })
@@ -131,12 +135,14 @@ function CreateCauldronItem(x, y, soul1, soul2, soul3)
     end
     if AnyOfTableEquals({soul1, soul2, soul3}, "zombie") then
         EntityAddComponent2(item, "LuaComponent", {
+            _tags="enabled_in_hand",
             script_source_file = "data/scripts/perks/radar_item.lua",
             execute_every_n_frame = 1,
         })
     end
     if AnyOfTableEquals({soul1, soul2, soul3}, "orcs") then
         EntityAddComponent2(item, "LuaComponent", {
+            _tags="enabled_in_hand",
             script_source_file = "data/scripts/perks/radar.lua",
             execute_every_n_frame = 1,
         })
@@ -149,7 +155,7 @@ function CreateCauldronItem(x, y, soul1, soul2, soul3)
     if AnyOfTableEquals({soul1, soul2, soul3}, "slimes") then
         EntityAddComponent2(item, "GameEffectComponent", {
             _tags="enabled_in_hand",
-            effects="PROTECTION_RADIOACTIVITY",
+            effect="PROTECTION_RADIOACTIVITY",
             frames=-1,
         })
     end
@@ -162,7 +168,7 @@ function CreateCauldronItem(x, y, soul1, soul2, soul3)
     if AnyOfTableEquals({soul1, soul2, soul3}, "mage") then
         EntityAddComponent2(item, "GameEffectComponent", {
             _tags="enabled_in_hand",
-            effects="PROTECTION_FIRE",
+            effect="PROTECTION_FIRE",
             frames=-1,
         })
     end

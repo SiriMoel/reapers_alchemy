@@ -10,9 +10,10 @@ function kick(entity_who_kicked)
     local soul1, soul2, soul3 = GetCauldronItemSouls(this)
     
     if this == root then -- item is on the floor
-
+        GamePrint("kick")
     elseif root == player then -- item is being held by the player
-        local comps_proj = EntityGetComponentIncludingDisabled(this, "VariableStorageComponent", "souls_cauldron_item_projectile") or {}
+        GamePrint("player kick")
+        --[[local comps_proj = EntityGetComponentIncludingDisabled(this, "VariableStorageComponent", "souls_cauldron_item_projectile") or {}
         local comp_controls = EntityGetFirstComponentIncludingDisabled(player, "ControlsComponent") or 0
         local aim_x, aim_y = ComponentGetValue2(comp_controls, "mAimingVectorNormalized")
         local vel = 6000 -- TESTING
@@ -41,6 +42,6 @@ function kick(entity_who_kicked)
             for i=1,amount do
                 
             end
-        end
+        end]]
     end
 end

@@ -179,16 +179,17 @@ function DistanceBetween(x1, y1, x2, y2)
     return math.sqrt(((x2 - x1)^2) + ((y2 - y1)^2))
 end
 
-function ScrambleString(string) -- stolen from roblox forums https://devforum.roblox.com/t/how-to-randomize-letters-in-a-string/1277358
-    local t = {}
-	for i = 1, #string do
-		t[i] = string:sub(i, i)
-	end
-	for i = #t, 2, -1 do
-		local j = math.random(i)
-		t[i], t[j] = t[j], t[i]
-	end
-	return table.concat(t)
+
+function string.scramble(s) -- danke https://stackoverflow.com/questions/51752497/how-to-shuffle-the-letters-of-a-word-using-lua
+    local frame = GameGetFrameNum()
+    math.randomseed(frame, frame)
+    local letters = {}
+    for letter in s:gmatch'.[\128-\191]*' do
+       table.insert(letters, {letter = letter, rnd = math.random()})
+    end
+    table.sort(letters, function(a, b) return a.rnd < b.rnd end)
+    for i, v in ipairs(letters) do letters[i] = v.letter end
+    return table.concat(letters)
 end
 
 function AnyOfTableEquals(table, what)

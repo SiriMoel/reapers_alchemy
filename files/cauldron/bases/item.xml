@@ -4,6 +4,13 @@
         script_kick="mods/reapers_cauldron/files/cauldron/item_kick.lua"
     ></LuaComponent>
 
+	<PhysicsImageShapeComponent 
+		body_id="1"
+		centered="1"
+		image_file="mods/reapers_cauldron/files/cauldron/sprites/item/generated/1_1_1_inworld.png"
+		material="rock_box2d_hard"
+	></PhysicsImageShapeComponent>
+
     <PhysicsBodyComponent 
 		_tags="enabled_in_world"
 		uid="1" 
