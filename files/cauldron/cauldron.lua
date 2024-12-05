@@ -14,19 +14,21 @@ for i=1,#targets do
     end
 end
 
-local cost = 10
-
-local soul1_id = SoulToCauldronId(GetSoulIdolSoul(targets2[1]))
-local soul2_id = SoulToCauldronId(GetSoulIdolSoul(targets2[2]))
-local soul3_id = SoulToCauldronId(GetSoulIdolSoul(targets2[3]))
-
-cost = 10 + soul_types_cauldron[soul1_id].cost + soul_types_cauldron[soul2_id].cost + soul_types_cauldron[soul3_id].cost
-
-local comp_emitter = EntityGetFirstComponentIncludingDisabled(cauldron, "ParticleEmitterComponent")
+local comp_emitter = EntityGetFirstComponentIncludingDisabled(cauldron, "ParticleEmitterComponent", "souls_reapers_cauldron_light")
 
 if comp_emitter ~= nil then
     ComponentSetValue2(comp_emitter, "count_min", 5 * #targets2)
     ComponentSetValue2(comp_emitter, "count_max", 5 * #targets2)
+end
+
+local cost = 10
+
+local soul1_id = SoulToCauldronId(GetSoulIdolSoul(targets2[1])) or 0
+local soul2_id = SoulToCauldronId(GetSoulIdolSoul(targets2[2])) or 0
+local soul3_id = SoulToCauldronId(GetSoulIdolSoul(targets2[3])) or 0
+
+if #targets2 >= 3 then
+    cost = 10 + soul_types_cauldron[soul1_id].cost + soul_types_cauldron[soul2_id].cost + soul_types_cauldron[soul3_id].cost
 end
 
 local comp1 = EntityGetFirstComponentIncludingDisabled(cauldron, "InteractableComponent", "souls_reapers_cauldron_interact")

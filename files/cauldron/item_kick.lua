@@ -75,12 +75,12 @@ function kick(entity_who_kicked)
         if AnyOfTableEquals({soul1, soul2, soul3}, "friendly") then
             GamePlaySound("data/audio/Desktop/animals.bank", "animals/sheep", x, y) -- no idea how audio works
         end
-    elseif root == player then -- item is being held by the player
+    elseif this == HeldItem(player) then -- item is being held by the player
         --GamePrint("player kick") -- TESTING
         local comps_proj = EntityGetComponentIncludingDisabled(this, "VariableStorageComponent", "souls_cauldron_item_projectile") or {}
         local comp_controls = EntityGetFirstComponentIncludingDisabled(player, "ControlsComponent") or 0
         local aim_x, aim_y = ComponentGetValue2(comp_controls, "mAimingVectorNormalized")
-        local vel = 6000 -- TESTING
+        local vel = 200 -- TESTING
         local vel_x, vel_y = aim_x * vel, aim_y * vel
         for i=1,#comps_proj do
             local proj_path = ComponentGetValue2(comps_proj[i], "value_string")
@@ -88,11 +88,13 @@ function kick(entity_who_kicked)
             local amount = 0
             amount = AmountOfTableEquals({soul1, soul2, soul3}, "bat") -- increase speed
             local comp_velocity = EntityGetFirstComponentIncludingDisabled(proj, "VelocityComponent")
+            --GamePrint(tostring(amount))
+            --GamePrint(tostring(comp_velocity))
             if comp_velocity ~= nil then
-                local pvel_x,pvel_y = ComponentGetValueVector2( comp, "mVelocity")
-                pvel_x = vel_x * (1 + (0.3 * amount))
-                pvel_y = vel_y * (1 + (0.3 * amount))
-                ComponentSetValueVector2( comp, "mVelocity", pvel_x, pvel_y)
+                local pvel_x,pvel_y = ComponentGetValueVector2( comp_velocity, "mVelocity")
+                pvel_x = vel_x * (1 + (2.5 * amount))
+                pvel_y = vel_y * (1 + (2.5 * amount))
+                ComponentSetValueVector2( comp_velocity, "mVelocity", pvel_x, pvel_y)
             end
             amount = AmountOfTableEquals({soul1, soul2, soul3}, "fly") -- add homing
             if amount > 0 then

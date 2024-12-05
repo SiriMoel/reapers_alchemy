@@ -81,6 +81,7 @@ function OnPlayerSpawned(player)
 
     --dofile_once("mods/reapers_cauldron/files/scripts/cauldron_utils.lua")
     --CreateCauldronItem(px, py - 20, "orcs", "worm", "bat")
+    --for i=1,100 do AddSouls(soul_types[math.random(1,#soul_types)], 10) end
 
     GameAddFlagRun("reapers_cauldron_init")
 end

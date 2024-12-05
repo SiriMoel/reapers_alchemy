@@ -51,6 +51,17 @@ function interacting( entity_who_interacted, entity_interacted, interactable_nam
                     EntityKill(v)
                 end
             end
+            local comp1 = EntityGetFirstComponentIncludingDisabled(cauldron, "InteractableComponent", "souls_reapers_cauldron_interact")
+            local comp2 = EntityGetFirstComponentIncludingDisabled(cauldron, "LuaComponent", "souls_reapers_cauldron_interact")
+            if comp1 ~= nil and comp2 ~= nil then
+                EntitySetComponentIsEnabled(cauldron, comp1, false)
+                EntitySetComponentIsEnabled(cauldron, comp2, false)
+            end
+            local comp_emitter = EntityGetFirstComponentIncludingDisabled(cauldron, "ParticleEmitterComponent", "souls_reapers_cauldron_light")
+            if comp_emitter ~= nil then
+                ComponentSetValue2(comp_emitter, "count_min", 0)
+                ComponentSetValue2(comp_emitter, "count_max", 0)
+            end
         else
             GamePrint("You do not have enough souls for this.")
         end
