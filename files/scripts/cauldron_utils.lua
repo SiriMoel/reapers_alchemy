@@ -130,9 +130,9 @@ function CreateCauldronItem(x, y, soul1, soul2, soul3)
             execute_every_n_frame = 1,
         })
     end
-    if AnyOfTableEquals({soul1, soul2, soul3}, "spider") then
+    --[[if AnyOfTableEquals({soul1, soul2, soul3}, "spider") then
 
-    end
+    end]]
     if AnyOfTableEquals({soul1, soul2, soul3}, "zombie") then
         EntityAddComponent2(item, "LuaComponent", {
             _tags="enabled_in_hand",
@@ -158,18 +158,28 @@ function CreateCauldronItem(x, y, soul1, soul2, soul3)
             effect="PROTECTION_RADIOACTIVITY",
             frames=-1,
         })
+        EntityAddComponent2(item, "VariableStorageComponent", {
+            _tags="souls_cauldron_item_projectile",
+            name="souls_cauldron_item_projectile",
+            value_string="mods/reapers_cauldron/files/cauldron/item_proj_slimes.xml",
+        })
     end
     --[[if AnyOfTableEquals({soul1, soul2, soul3}, "friendly") then
 
     end]]
-    --[[if AnyOfTableEquals({soul1, soul2, soul3}, "gilded") then
-
-    end]]
+    if AnyOfTableEquals({soul1, soul2, soul3}, "gilded") then
+        EntityAddTag(item, "souls_gilded_item")
+    end
     if AnyOfTableEquals({soul1, soul2, soul3}, "mage") then
         EntityAddComponent2(item, "GameEffectComponent", {
             _tags="enabled_in_hand",
             effect="PROTECTION_FIRE",
             frames=-1,
+        })
+        EntityAddComponent2(item, "VariableStorageComponent", {
+            _tags="souls_cauldron_item_projectile",
+            name="souls_cauldron_item_projectile",
+            value_string="mods/reapers_cauldron/files/cauldron/item_proj_mage.xml",
         })
     end
     if AnyOfTableEquals({soul1, soul2, soul3}, "ghost") then
@@ -185,5 +195,36 @@ function CreateCauldronItem(x, y, soul1, soul2, soul3)
 end
 
 function CreateCauldronWand(x, y, wand, soul1, soul2, soul3)
-
+    local comp_ability = EntityGetFirstComponentIncludingDisabled(wand, "AbilityComponent")
+    if comp_ability == nil then return print("SOULS - could not find AbilityComponent for CreateCauldronWand()") end
+    local amount_bat = AmountOfTableEquals({soul1, soul2, soul3}, "bat")
+    local amount_fly = AmountOfTableEquals({soul1, soul2, soul3}, "fly")
+    local amount_worm = AmountOfTableEquals({soul1, soul2, soul3}, "worm")
+    local amount_spider = AmountOfTableEquals({soul1, soul2, soul3}, "spider")
+    local amount_zombie = AmountOfTableEquals({soul1, soul2, soul3}, "zombie")
+    local amount_orcs = AmountOfTableEquals({soul1, soul2, soul3}, "orcs")
+    local amount_slimes = AmountOfTableEquals({soul1, soul2, soul3}, "slimes")
+    local amount_friendly = AmountOfTableEquals({soul1, soul2, soul3}, "friendly")
+    local amount_gilded = AmountOfTableEquals({soul1, soul2, soul3}, "gilded")
+    local amount_mage = AmountOfTableEquals({soul1, soul2, soul3}, "mage")
+    local amount_ghost = AmountOfTableEquals({soul1, soul2, soul3}, "ghost")
+    local amount_fungus = AmountOfTableEquals({soul1, soul2, soul3}, "fungus")
+    local amount_boss = AmountOfTableEquals({soul1, soul2, soul3}, "boss")
+    local rt = tonumber(ComponentObjectGetValue(comp_ability, "gun_config", "reload_time")) or 0 -- reload time
+    local frw = tonumber(ComponentObjectGetValue(comp_ability, "gunaction_config", "fire_rate_wait")) or 0 -- fire rate wait
+    local mcs = tonumber(ComponentGetValue2(comp_ability, "mana_charge_speed")) or 0 -- mana charge speed
+    local mm = tonumber(ComponentGetValue2(comp_ability, "mana_max")) or 0 -- mana max
+    local cap = tonumber(ComponentObjectGetValue( comp_ability, "gun_config", "deck_capacity")) or 0 -- deck capacity 
+    rt = math.ceil(math.max(rt - (2 * (amount_bat + amount_fly)) + (amount_mage + amount_ghost + amount_fungus + amount_zombie), 0))
+    frw = math.ceil(math.max(frw - (amount_bat + amount_fly) + (amount_mage + amount_ghost + amount_fungus + amount_zombie), 0))
+    mcs = math.ceil(math.min(mcs + (35 * (amount_mage + amount_ghost)) - ( 10 * (amount_bat + amount_fly + amount_fungus + amount_zombie)), 10000))
+    mm = math.ceil(math.min(mm + (50 * (amount_mage + amount_ghost)) - ( 20 * (amount_bat + amount_fly + amount_fungus + amount_zombie)), 10000))
+    cap = math.ceil(math.min(cap + (amount_fungus) + (amount_zombie), 26))
+    ComponentObjectSetValue2(comp_ability, "gun_config", "reload_time", rt)
+    ComponentObjectSetValue2(comp_ability, "gunaction_config", "fire_rate_wait", frw)
+    ComponentSetValue2(comp_ability, "mana_charge_speed", mcs)
+    ComponentSetValue2(comp_ability, "mana_max", mm)
+    ComponentObjectSetValue2(comp_ability, "gun_config", "deck_capacity", cap)
+    EntitySetTransform(wand, x, y)
+    return wand
 end

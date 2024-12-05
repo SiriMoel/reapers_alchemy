@@ -7,7 +7,6 @@
 
     <ParticleEmitterComponent
 		_tags="souls_reapers_cauldron_light"
-        _enabled="0"
 		emitted_material_name="soul_particles"
 		offset.x="0"
 		offset.y="6"

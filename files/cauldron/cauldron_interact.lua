@@ -23,15 +23,33 @@ function interacting( entity_who_interacted, entity_interacted, interactable_nam
 
     cost = 10 + soul_types_cauldron[soul1_id].cost + soul_types_cauldron[soul2_id].cost + soul_types_cauldron[soul3_id].cost
 
+    local wand
+    local wands = EntityGetInRadiusWithTag(x, y, 20, "wand") or {}
+    if #wands > 0 then
+        for i=1,#wands do
+            if EntityGetRootEntity(wands[i]) == wands[i] then
+                wand = wands[i]
+                break
+            end
+        end
+    end
+
     if #targets2 == 3 then
         if (GetSoulsCount("all") - GetSoulsCount("boss")) >= cost then
             for i=1,cost do
                 RemoveSoul(GetRandomSoul(false))
             end
             GamePrintImportant("THE CAULDRON HUMS...", "Forging complete!", "mods/reapers_cauldron/files/souls_decoration.png")
-            local item = CreateCauldronItem(x, y, GetSoulIdolSoul(targets[1]), GetSoulIdolSoul(targets[2]), GetSoulIdolSoul(targets[3]))
-            for i,v in ipairs(targets2) do
-                EntityKill(v)
+            if wand ~= nil then
+                wand = CreateCauldronWand(x, y, wand, GetSoulIdolSoul(targets[1]), GetSoulIdolSoul(targets[2]), GetSoulIdolSoul(targets[3]))
+                for i,v in ipairs(targets2) do
+                    EntityKill(v)
+                end
+            else
+                local item = CreateCauldronItem(x, y, GetSoulIdolSoul(targets[1]), GetSoulIdolSoul(targets[2]), GetSoulIdolSoul(targets[3]))
+                for i,v in ipairs(targets2) do
+                    EntityKill(v)
+                end
             end
         else
             GamePrint("You do not have enough souls for this.")

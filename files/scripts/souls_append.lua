@@ -6,12 +6,12 @@ soul_types_cauldron = {
     { soul = "worm", cost = 5, },
     { soul = "spider", cost = 3, },
     { soul = "zombie", cost = 5, },
-    { soul = "orcs", cost = 5, },
-    { soul = "slimes", cost = 5, },
+    { soul = "orcs", cost = 10, },
+    { soul = "slimes", cost = 10, },
     { soul = "friendly", cost = -3, },
     { soul = "gilded", cost = 30, },
     { soul = "mage", cost = 10, },
-    { soul = "ghost", cost = 10, },
+    { soul = "ghost", cost = 5, },
     { soul = "fungus", cost = -3, },
     { soul = "boss", cost = 30, },
 }
@@ -58,11 +58,11 @@ end
 
 function GetRandomSoul2(x, y, frame)
     math.randomseed(x + frame, y + frame)
-    local whichtype = ""
+    local whichtype = "0"
     local whichtypes = {}
-    for i,v in ipairs(soul_types) do
-        if GetSoulsCount(v) > 0 then
-            table.insert(whichtypes, v)
+    for i=1,#soul_types do
+        if GetSoulsCount(soul_types[i]) > 0 then
+            table.insert(whichtypes, soul_types[i])
         end
     end
     if #whichtypes > 0 then

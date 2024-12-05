@@ -12,6 +12,7 @@ dofile_once("mods/souls/files/scripts/souls.lua")
 
 -- set & append
 ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/reapers_cauldron/files/actions.lua" )
+ModLuaFileAppend( "data/scripts/items/drop_money.lua", "mods/reapers_cauldron/files/scripts/drop_money_append.lua" )
 
 -- biome things
 local biomes = {
