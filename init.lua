@@ -10,8 +10,6 @@ dofile_once("mods/reapers_cauldron/files/scripts/utils.lua")
 ModLuaFileAppend("mods/souls/files/scripts/souls.lua", "mods/reapers_cauldron/files/scripts/souls_append.lua")
 dofile_once("mods/souls/files/scripts/souls.lua")
 
-local nxml = dofile_once("mods/reapers_cauldron/lib/nxml.lua")
-
 -- set & append
 ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/reapers_cauldron/files/actions.lua" )
 ModLuaFileAppend( "data/scripts/items/drop_money.lua", "mods/reapers_cauldron/files/scripts/drop_money_append.lua" )
