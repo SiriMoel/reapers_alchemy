@@ -112,30 +112,22 @@ function AddMoney(amount)
     ComponentSetValue2(comp_wallet, "money", money)
 end
 
+function CurrentCard(wand) -- version of copi code that makes my brain happy
+    local wand_actions = EntityGetAllChildren(wand) or {}
+    for i=1,#wand_actions do
+        local itemcomp = EntityGetFirstComponentIncludingDisabled(wand_actions[i], "ItemComponent")
+        if itemcomp then
+            if ComponentGetValue2(itemcomp,"mItemUid") == current_action.inventoryitem_id then
+                return wand_actions[i]
+            end
+        end
+    end
+end
+
 function HeldItem(player)
     local comp_inv = EntityGetFirstComponentIncludingDisabled(player, "Inventory2Component") or 0
     local held_item = ComponentGetValue2(comp_inv, "mActiveItem")
     return held_item
-end
-
-function GetMaterialIngestionEffect(material) -- i have no idea what im doing so ofc this doesnt work yet
-    local effects = {}
-    local nxml = dofile_once("mods/pharmacokinetics/lib/nxml.lua")
-    local materials = ModTextFileGetContent("data/materials.xml")
-    local xml = nxml.parse(materials)
-    for element in xml:each_child() do
-        if element.attr.name == "material" then
-            for child in element:each_of("StatusEffects") do
-                for childdos in child:each_of("Ingestion") do
-                    for childtres in childdos:eachof("StatusEffect") do
-                        local effect = childtres.tostring(childtres, true)
-                        GamePrint(effect)
-                        print(effect)
-                    end
-                end
-            end
-        end
-    end
 end
 
 function IncreaseFlightLeft(player, amount)
@@ -143,7 +135,7 @@ function IncreaseFlightLeft(player, amount)
     if comp ~= nil then
         local flight = ComponentGetValue2( comp, "mFlyingTimeLeft" )
 		local maxflight = ComponentGetValue2( comp, "fly_time_max" ) or 3.0
-        flight = math.min( maxflight, flight + 1.2 )
+        flight = math.min( maxflight, flight + amount )
         ComponentSetValue2( comp, "mFlyingTimeLeft", flight )
     end
 end
@@ -202,7 +194,7 @@ function AnyOfTableEquals(table, what)
 end
 
 function AmountOfTableEquals(table, what)
-    local amount = 0 
+    local amount = 0
     for i=1,#table do
         if table[i] == what then
             amount = amount + 1

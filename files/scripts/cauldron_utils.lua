@@ -197,6 +197,9 @@ end
 function CreateCauldronWand(x, y, wand, soul1, soul2, soul3)
     local comp_ability = EntityGetFirstComponentIncludingDisabled(wand, "AbilityComponent")
     if comp_ability == nil then return print("SOULS - could not find AbilityComponent for CreateCauldronWand()") end
+    local soul1_id = SoulToCauldronId(soul1)
+    local soul2_id = SoulToCauldronId(soul2)
+    local soul3_id = SoulToCauldronId(soul3)
     local amount_bat = AmountOfTableEquals({soul1, soul2, soul3}, "bat")
     local amount_fly = AmountOfTableEquals({soul1, soul2, soul3}, "fly")
     local amount_worm = AmountOfTableEquals({soul1, soul2, soul3}, "worm")
@@ -225,6 +228,12 @@ function CreateCauldronWand(x, y, wand, soul1, soul2, soul3)
     ComponentSetValue2(comp_ability, "mana_charge_speed", mcs)
     ComponentSetValue2(comp_ability, "mana_max", mm)
     ComponentObjectSetValue2(comp_ability, "gun_config", "deck_capacity", cap)
+    ComponentObjectSetValue2(comp_ability, "gun_config", "actions_per_round", 1)
+    ComponentSetValue2(comp_ability, "sprite_file", "mods/reapers_cauldron/files/cauldron/sprites/wand/generated/" .. soul1_id .. "_" .. soul2_id .. "_" .. soul3_id .. ".xml")
+    local comp_sprite = EntityGetFirstComponentIncludingDisabled(wand, "SpriteComponent")
+    if comp_sprite ~= nil then
+        ComponentSetValue2(comp_sprite, "image_file", "mods/reapers_cauldron/files/cauldron/sprites/wand/generated/" .. soul1_id .. "_" .. soul2_id .. "_" .. soul3_id .. ".xml")
+    end
     EntitySetTransform(wand, x, y)
     return wand
 end
