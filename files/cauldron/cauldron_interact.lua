@@ -27,7 +27,7 @@ function interacting( entity_who_interacted, entity_interacted, interactable_nam
     local wands = EntityGetInRadiusWithTag(x, y, 20, "wand") or {}
     if #wands > 0 then
         for i=1,#wands do
-            if EntityGetRootEntity(wands[i]) == wands[i] then
+            if EntityGetRootEntity(wands[i]) == wands[i] and not EntityHasTag(wands[i], "soul_tome") then
                 wand = wands[i]
                 break
             end
@@ -66,6 +66,6 @@ function interacting( entity_who_interacted, entity_interacted, interactable_nam
             GamePrint("You do not have enough souls for this.")
         end
     else
-        GamePrint("hey drop them idols ok")
+        --GamePrint("hey drop them idols ok")
     end
 end

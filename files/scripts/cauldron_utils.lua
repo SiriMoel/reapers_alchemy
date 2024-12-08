@@ -120,7 +120,7 @@ function CreateCauldronItem(x, y, soul1, soul2, soul3)
         EntityAddComponent2(item, "LuaComponent", {
             _tags="enabled_in_hand",
             script_source_file="mods/reapers_cauldron/files/cauldron/item_passive_fly.lua",
-            execute_every_n_frame="10",
+            execute_every_n_frame=10,
         })
     end
     if AnyOfTableEquals({soul1, soul2, soul3}, "worm") then
@@ -218,11 +218,11 @@ function CreateCauldronWand(x, y, wand, soul1, soul2, soul3)
     local mcs = tonumber(ComponentGetValue2(comp_ability, "mana_charge_speed")) or 0 -- mana charge speed
     local mm = tonumber(ComponentGetValue2(comp_ability, "mana_max")) or 0 -- mana max
     local cap = tonumber(ComponentObjectGetValue( comp_ability, "gun_config", "deck_capacity")) or 0 -- deck capacity 
-    rt = math.ceil(math.max(rt - (2 * (amount_bat + amount_fly)) + (amount_mage + amount_ghost + amount_fungus + amount_zombie), 0))
-    frw = math.ceil(math.max(frw - (amount_bat + amount_fly) + (amount_mage + amount_ghost + amount_fungus + amount_zombie), 0))
-    mcs = math.ceil(math.min(mcs + (35 * (amount_mage + amount_ghost)) - ( 10 * (amount_bat + amount_fly + amount_fungus + amount_zombie)), 10000))
-    mm = math.ceil(math.min(mm + (50 * (amount_mage + amount_ghost)) - ( 20 * (amount_bat + amount_fly + amount_fungus + amount_zombie)), 10000))
-    cap = math.ceil(math.min(cap + (amount_fungus) + (amount_zombie), 26))
+    rt = math.ceil(math.max(rt - (2 * (amount_gilded + amount_boss + amount_slimes + amount_bat + amount_fly + amount_worm)) + (amount_mage + amount_ghost + amount_fungus + amount_zombie + amount_spider + amount_friendly), 0))
+    frw = math.ceil(math.max(frw - (amount_gilded + amount_boss + amount_slimes + amount_bat + amount_fly + amount_spider) + (amount_mage + amount_ghost + amount_fungus + amount_zombie + amount_worm + amount_friendly), 0))
+    mcs = math.ceil(math.min(mcs + (35 * (amount_gilded + amount_boss + amount_mage + amount_ghost + amount_orcs)) - ( 10 * (amount_bat + amount_fly + amount_fungus + amount_zombie + amount_friendly)), 10000))
+    mm = math.ceil(math.min(mm + (50 * (amount_gilded + amount_boss + amount_mage + amount_ghost)) - ( 20 * (amount_orcs + amount_bat + amount_fly + amount_fungus + amount_zombie + amount_friendly)), 10000))
+    cap = math.ceil(math.min(cap + (amount_gilded + amount_boss + amount_fungus + amount_zombie), 27))
     ComponentObjectSetValue2(comp_ability, "gun_config", "reload_time", rt)
     ComponentObjectSetValue2(comp_ability, "gunaction_config", "fire_rate_wait", frw)
     ComponentSetValue2(comp_ability, "mana_charge_speed", mcs)

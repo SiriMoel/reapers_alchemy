@@ -105,7 +105,6 @@ end
 -- player
 function OnPlayerSpawned(player)
     if GameHasFlagRun("reapers_cauldron_init") then return end
-    print(file)
 
     local px, py = EntityGetTransform(player)
 
