@@ -1,35 +1,15 @@
-[img]https://i.imgur.com/RHXXaL3.png[/img]
+This mod requires [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3313573016]Souls[/url] to run.
+Ensure this mod loads after Souls.
 
-A continuation & remaster of Tales of Kupoli's souls mechanic.
+An expansion for Souls, adding a cauldron that can create items, and upgrade wands, using souls.
+Adds a cauldron & spell to the room added by Souls.
 
-This mod adds the ability to collect and use the souls of enemies for your spells.
-Spells added by this mod have different effects depending on what type of soul you use to cast them.
+[b]How do I use the cauldon?[/b]
+Use the spell found in the cauldron to turn souls into Soul Idols.
+Throw 3 Soul Idols into the cauldron and interact to create an item with effects depending on what souls were used.
+Alternatively, throw in a wand and then 3 Soul Idols and interact to upgrade the wand's stats, based off what soul idols were used.
 
 [img]https://i.imgur.com/z1SIIJF.png[/img]
 
-[b]31[/b] new spells
-[b]1[/b] new perk
-[b]3+[/b] wands and items
-[b]2[/b] new enemies
-[b]2[/b] new structures
-[b]2+[/b] new materials
-[b]13[/b] soul types
-An upgradeable magic tome
-Revive bosses
-Create a Phylactery to enhance your survivability
-
-Kill enemies to collect souls, and cast spells with those souls.
-
-[img]https://i.imgur.com/EfsTYyC.png[/img]
-
-Cross-mod interactions with:
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3032128572]Apotheosis[/url][/b] 2 new soul types
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3316355233]Glimmers Expanded[/url][/b] 1 new spell
-This mod should load after Apotheosis and before Glimmers Expanded for compatibility to work.
-Souls should be compatible with all content mods, except Tales of Kupoli.
-
 Discord: https://discord.gg/FKaRA9HMUq
-Github: https://github.com/SiriMoel/souls
-
-[img]https://i.imgur.com/7MNdeHB.png[/img]
-(ignore how bad the quality is on the gifs, steams weird)
+Github: https://github.com/SiriMoel/tome_magic
