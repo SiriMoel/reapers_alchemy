@@ -8,7 +8,11 @@ function kick(entity_who_kicked)
     local x, y = EntityGetTransform(this)
     local frame = GameGetFrameNum()
     math.randomseed(x + frame, y + frame)
+    local free = false
     local soul1, soul2, soul3 = GetCauldronItemSouls(this)
+    if AnyOfTableEquals({soul1, soul2, soul3}, "boss") or EntityHasTag(this, "souls_cauldron_free_abilities") then
+        free = true
+    end
     if this == root then -- item is on the floor
         --GamePrint("kick") -- TESTING
         if AnyOfTableEquals({soul1, soul2, soul3}, "worm") then
@@ -22,7 +26,7 @@ function kick(entity_who_kicked)
             if (GetSoulsCount("all") - GetSoulsCount("boss")) >= amount_spider then
                 for i=1,amount_spider do
                     EntityLoad("data/entities/animals/longleg.xml", x, y)
-                    RemoveSoul(GetRandomSoul(false))
+                    if not free then RemoveSoul(GetRandomSoul(false)) end
                 end
             else
                 GamePrint("You do not have enough souls for this.")
@@ -40,13 +44,13 @@ function kick(entity_who_kicked)
                         shoot_projectile( this, "data/entities/items/pickup/goldnugget_50.xml", x, y, math.random(-40,40), math.random(-40,40))
                     elseif outcome < 10 then
                         shoot_projectile( this, "data/entities/items/pickup/goldnugget_10.xml", x, y, math.random(-40,40), math.random(-40,40))
-                        shoot_projectile( this, "data/entities/items/pickup/goldnugget_100.xml", x, y, math.random(-40,40), math.random(-40,40))
+                        shoot_projectile( this, "data/entities/items/pickup/goldnugget_10.xml", x, y, math.random(-40,40), math.random(-40,40))
                     else
                         shoot_projectile( this, "data/entities/items/pickup/goldnugget_10.xml", x, y, math.random(-40,40), math.random(-40,40))
                         shoot_projectile( this, "data/entities/items/pickup/goldnugget_10.xml", x, y, math.random(-40,40), math.random(-40,40))
                         shoot_projectile( this, "data/entities/items/pickup/goldnugget_10.xml", x, y, math.random(-40,40), math.random(-40,40))
                     end
-                    RemoveSoul(GetRandomSoul(false))
+                    if not free then RemoveSoul(GetRandomSoul(false)) end
                 end
             else
                 GamePrint("You do not have enough souls for this.")
@@ -80,7 +84,7 @@ function kick(entity_who_kicked)
         local comps_proj = EntityGetComponentIncludingDisabled(this, "VariableStorageComponent", "souls_cauldron_item_projectile") or {}
         local comp_controls = EntityGetFirstComponentIncludingDisabled(player, "ControlsComponent") or 0
         local aim_x, aim_y = ComponentGetValue2(comp_controls, "mAimingVectorNormalized")
-        local vel = 200 -- TESTING
+        local vel = 200
         local vel_x, vel_y = aim_x * vel, aim_y * vel
         for i=1,#comps_proj do
             local proj_path = ComponentGetValue2(comps_proj[i], "value_string")
@@ -108,11 +112,11 @@ function kick(entity_who_kicked)
             amount = AmountOfTableEquals({soul1, soul2, soul3}, "spider") -- add melee damage
             local comp_proj = EntityGetFirstComponentIncludingDisabled(proj, "ProjectileComponent")
             if comp_proj ~= nil then
-                ComponentObjectSetValue2(comp_proj, "damage_by_type", "melee", ComponentObjectGetValue2(comp_proj, "damage_by_type", "melee") + (1 * amount))
+                ComponentObjectSetValue2(comp_proj, "damage_by_type", "melee", ComponentObjectGetValue2(comp_proj, "damage_by_type", "melee") + (0.7 * amount))
             end
             amount = AmountOfTableEquals({soul1, soul2, soul3}, "zombie") -- add proj damage
             if comp_proj ~= nil then
-                ComponentSetValue2(comp_proj, "damage", ComponentGetValue2(comp_proj, "damage") + (1 * amount))
+                ComponentSetValue2(comp_proj, "damage", ComponentGetValue2(comp_proj, "damage") + (0.7 * amount))
             end
             amount = AmountOfTableEquals({soul1, soul2, soul3}, "boss") -- Reap souls
             if amount > 0 then
@@ -128,6 +132,7 @@ function kick(entity_who_kicked)
                 local a = 16
                 a = a * amount_gilded
                 ConvertMaterialOnAreaInstantly(x, y, a, a, CellFactory_GetType("blood"), CellFactory_GetType("gold"), true, false)
+                if free then return end
                 for i=1,math.max(amount_gilded + 1, 3) do
                     RemoveSoul(GetRandomSoul(false))
                 end
