@@ -184,6 +184,13 @@ function CreateCauldronItem(x, y, soul1, soul2, soul3)
     end
     if AnyOfTableEquals({soul1, soul2, soul3}, "ghost") then
         EntityAddTag(item, "evil_eye")
+        EntityAddComponent2(item, "LightComponent", {
+            _tags="enabled_in_world,enabled_in_hand,magic_eye_check",
+		    radius=60,
+		    r=255,
+		    g=94,
+		    b=94,
+        })
     end
     --[[if AnyOfTableEquals({soul1, soul2, soul3}, "fungus") then
 
