@@ -1,7 +1,7 @@
 This mod requires [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3313573016]Souls[/url] to run.
 Ensure this mod loads after Souls.
 
-An expansion for Souls, adding a cauldron that can create items, and upgrade wands, using souls.
+An expansion for Souls, adding a cauldron that can create items and upgrade wands using souls.
 Adds a cauldron & spell to the room added by Souls.
 
 [b]How do I use the cauldon?[/b]
@@ -12,4 +12,4 @@ Alternatively, throw in a wand and then 3 Soul Idols and interact to upgrade the
 [img]https://i.imgur.com/z1SIIJF.png[/img]
 
 Discord: https://discord.gg/FKaRA9HMUq
-Github: https://github.com/SiriMoel/tome_magic
+Github: https://github.com/SiriMoel/reapers_cauldron
