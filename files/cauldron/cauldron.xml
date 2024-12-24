@@ -7,7 +7,7 @@
 
     <ParticleEmitterComponent
 		_tags="souls_reapers_cauldron_light"
-		emitted_material_name="soul_particles"
+		emitted_material_name="souls_soul_particles"
 		offset.x="0"
 		offset.y="6"
 		x_pos_offset_min="0"
